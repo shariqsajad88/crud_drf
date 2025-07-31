@@ -35,13 +35,13 @@ class UserSerializer(serializers.ModelSerializer):
         ]
 
     def get_verified_phone_numbers_count(self, obj):
-        return obj.phone_numbers.filter(is_verified=True).count()
+        return getattr(obj, 'verified_phone_numbers_count', 0)
 
     def get_verified_addresses_count(self, obj):
-        return obj.addresses.filter(is_verified=True).count()
+        return getattr(obj, 'verified_addresses_count', 0)
 
     def get_total_phone_numbers_count(self, obj):
-        return obj.phone_numbers.count()
+        return getattr(obj, 'total_phone_numbers_count', 0)
 
     def get_total_addresses_count(self, obj):
-        return obj.addresses.count()
+        return getattr(obj, 'total_addresses_count', 0)
