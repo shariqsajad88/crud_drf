@@ -17,6 +17,8 @@ class UserSerializer(serializers.ModelSerializer):
     phone_numbers = PhoneNumberSerializer(many=True, read_only=True)
     verified_phone_numbers_count = serializers.SerializerMethodField()
     verified_addresses_count = serializers.SerializerMethodField()
+    total_phone_numbers_count = serializers.SerializerMethodField()
+    total_addresses_count = serializers.SerializerMethodField()
 
     class Meta:
         model = User
@@ -27,7 +29,9 @@ class UserSerializer(serializers.ModelSerializer):
             'addresses',
             'phone_numbers',
             'verified_phone_numbers_count',
-            'verified_addresses_count'
+            'verified_addresses_count',
+            'total_phone_numbers_count',
+            'total_addresses_count'
         ]
 
     def get_verified_phone_numbers_count(self, obj):
@@ -35,3 +39,9 @@ class UserSerializer(serializers.ModelSerializer):
 
     def get_verified_addresses_count(self, obj):
         return obj.addresses.filter(is_verified=True).count()
+
+    def get_total_phone_numbers_count(self, obj):
+        return obj.phone_numbers.count()
+
+    def get_total_addresses_count(self, obj):
+        return obj.addresses.count()
